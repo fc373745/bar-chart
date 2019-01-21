@@ -2,17 +2,8 @@ import React from "react";
 import axios from "./axios";
 
 type Props = {
-    data: Data | null;
+    data: Item[];
     setUpdate: (b: boolean) => void;
-};
-
-type Item = {
-    name: string;
-    price: number;
-};
-
-type Data = {
-    [index: string]: Item;
 };
 
 const List: React.FunctionComponent<Props> = (props: Props) => {
@@ -25,14 +16,12 @@ const List: React.FunctionComponent<Props> = (props: Props) => {
     return (
         <ul>
             {props.data &&
-                Object.keys(props.data).map((item: string) => {
-                    return (
-                        <li key={item}>
-                            {props.data![item].name} | {props.data![item].price}
-                            <button onClick={() => del(item)}> Delete </button>
-                        </li>
-                    );
-                })}
+                props.data.map(item => (
+                    <li key={item.id}>
+                        {item.name} | {item.price}{" "}
+                        <button onClick={() => del(item.id)}>Delete</button>
+                    </li>
+                ))}
         </ul>
     );
 };
